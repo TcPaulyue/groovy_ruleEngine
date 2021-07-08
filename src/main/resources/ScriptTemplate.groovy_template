@@ -1,6 +1,7 @@
 import com.groovyexample.groovy.*
+import com.groovyexample.groovy.service.EngineGroovyModuleRule
 class %s implements EngineGroovyModuleRule {
-    boolean run(Object context){
+    boolean run(Object context,Object result){
         %s //place holder
     }
 }

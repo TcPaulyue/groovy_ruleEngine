@@ -4,11 +4,13 @@ package com.groovyexample.groovy.service;
 import com.groovyexample.groovy.bean.ScriptVariable;
 import com.groovyexample.groovy.bean.RuleEngineExecuteContext;
 import com.groovyexample.groovy.bean.StrategyScriptEntity;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 public interface GroovyScriptService {
 
-  Object  fragmentEval(RuleEngineExecuteContext context,Integer strategyId);
+  Object  fragmentEval(RuleEngineExecuteContext context,String name);
 
   boolean booleanScript(RuleEngineExecuteContext context,Integer strategyId);
   /**

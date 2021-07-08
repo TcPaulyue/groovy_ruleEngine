@@ -21,9 +21,6 @@ public class GroovyScriptTemplate  implements InitializingBean {
 
   public  String  getScript(String fileName){
     String template = SCRIPT_TEMPLATE_MAP.get(fileName);
-    if(StringUtils.isEmpty(template)){
-      throw new RuntimeException(String.format("请添加脚本模板: %s 到resources目录下", fileName));
-    }
     return template;
   }
 

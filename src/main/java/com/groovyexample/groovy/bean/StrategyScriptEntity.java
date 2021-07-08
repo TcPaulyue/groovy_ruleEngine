@@ -7,12 +7,65 @@ import org.apache.commons.lang.StringUtils;
 /**
  * script DTO
  */
-@Data
 public class StrategyScriptEntity {
   /**
    * 策略id
    */
   private Integer strategyId;
+
+  public Integer getStrategyId() {
+    return strategyId;
+  }
+
+  public StrategyScriptEntity setStrategyId(Integer strategyId) {
+    this.strategyId = strategyId;
+    return this;
+  }
+
+  public String getScript() {
+    return script;
+  }
+
+  public StrategyScriptEntity setScript(String script) {
+    this.script = script;
+    return this;
+  }
+
+  public String getVariables() {
+    return variables;
+  }
+
+  public StrategyScriptEntity setVariables(String variables) {
+    this.variables = variables;
+    return this;
+  }
+
+  public String getAuthor() {
+    return author;
+  }
+
+  public StrategyScriptEntity setAuthor(String author) {
+    this.author = author;
+    return this;
+  }
+
+  public Date getCreateTime() {
+    return createTime;
+  }
+
+  public StrategyScriptEntity setCreateTime(Date createTime) {
+    this.createTime = createTime;
+    return this;
+  }
+
+  public Date getUpdateTime() {
+    return updateTime;
+  }
+
+  public StrategyScriptEntity setUpdateTime(Date updateTime) {
+    this.updateTime = updateTime;
+    return this;
+  }
 
   /**
    * 脚本内容

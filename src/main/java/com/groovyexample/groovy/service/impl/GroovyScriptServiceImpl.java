@@ -5,10 +5,8 @@ import com.groovyexample.groovy.bean.RuleEngineExecuteContext;
 import com.groovyexample.groovy.bean.StrategyScriptEntity;
 import com.groovyexample.groovy.service.EngineGroovyModuleRule;
 import com.groovyexample.groovy.service.GroovyScriptService;
-import com.groovyexample.groovy.service.StrategyScriptDataSouce;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +19,7 @@ public class GroovyScriptServiceImpl implements GroovyScriptService, Initializin
 
   @Autowired
   private RuleEngineGroovyModuleRuleExecutor groovyModuleRuleExecutor;
-  @Autowired
-  private StrategyScriptDataSouce strategyScriptDataSouce;
+
 
   @Override
   public void afterPropertiesSet() throws Exception {
@@ -32,16 +29,17 @@ public class GroovyScriptServiceImpl implements GroovyScriptService, Initializin
   }
 
   @Override
-  public Object fragmentEval(RuleEngineExecuteContext context, Integer strategyId) {
+  public Object fragmentEval(RuleEngineExecuteContext context, String name) {
     EngineGroovyModuleRule engineGroovyModuleRule = groovyModuleRuleExecutor
-      .getInstance("enginesScript_" + strategyId);
+      .getInstance(name);
     return engineGroovyModuleRule
       .run(context.getData().get("context"), context.getData().get("result"));
   }
 
   @Override
   public boolean booleanScript(RuleEngineExecuteContext context, Integer strategyId) {
-    return (Boolean) this.fragmentEval(context, strategyId);
+//    return (Boolean) this.fragmentEval(context, strategyId);
+    return true;
   }
 
   @Override
@@ -60,18 +58,27 @@ public class GroovyScriptServiceImpl implements GroovyScriptService, Initializin
     strategyScriptEntity.setAuthor(author);
     strategyScriptEntity.setCreateTime(date);
     strategyScriptEntity.setVariables(variableStr);
-    strategyScriptDataSouce.saveScript(strategyScriptEntity);
   }
 
   @Override
   public StrategyScriptEntity queryByStrategyId(Integer strategyId) {
-    return strategyScriptDataSouce.queryByStrategyId(strategyId);
+    return null;
   }
 
   @Override
   public List<StrategyScriptEntity> queryByStrategyIds(List<Integer> strategyIds) {
-    return strategyScriptDataSouce.queryByStrategyIds(strategyIds);
+    return null;
   }
+
+//  @Override
+//  public StrategyScriptEntity queryByStrategyId(Integer strategyId) {
+//    return strategyScriptDataSouce.queryByStrategyId(strategyId);
+//  }
+//
+//  @Override
+//  public List<StrategyScriptEntity> queryByStrategyIds(List<Integer> strategyIds) {
+//    return strategyScriptDataSouce.queryByStrategyIds(strategyIds);
+//  }
 
   @Override
   public boolean scriptTest(String scriptText) {
@@ -87,31 +94,41 @@ public class GroovyScriptServiceImpl implements GroovyScriptService, Initializin
 
   @Override
   public void loadScript() {
-    List<StrategyScriptEntity> list = strategyScriptDataSouce.queryAll();
-    list.forEach(item -> {
-      String scriptText = item.getScript();
-      Integer strategyId = item.getStrategyId();
-      groovyModuleRuleExecutor.praseAndCache("enginesScript_" + strategyId, scriptText);
-    });
+
   }
 
   @Override
   public int loadValidScript(boolean isInit) {
-    //TODO add some filter to get right valid scripts
-    List<StrategyScriptEntity> scriptList = strategyScriptDataSouce.queryAll().parallelStream()
-      .collect(Collectors.toList());
-
-    if (CollectionUtils.isEmpty(scriptList)) {
-      log.info("invalid script");
-      return 0;
-    }
-    scriptList.parallelStream().forEach(item -> {
-      String scriptText = item.getScript();
-      Integer strategyId = item.getStrategyId();
-      groovyModuleRuleExecutor.praseAndCache("enginesScript_" + strategyId, scriptText);
-    });
-
-    return scriptList.size();
+    return 0;
   }
+
+//  @Override
+//  public void loadScript() {
+//    List<StrategyScriptEntity> list = strategyScriptDataSouce.queryAll();
+//    list.forEach(item -> {
+//      String scriptText = item.getScript();
+//      Integer strategyId = item.getStrategyId();
+//      groovyModuleRuleExecutor.praseAndCache("enginesScript_" + strategyId, scriptText);
+//    });
+//  }
+//
+//  @Override
+//  public int loadValidScript(boolean isInit) {
+//    //TODO add some filter to get right valid scripts
+//    List<StrategyScriptEntity> scriptList = strategyScriptDataSouce.queryAll().parallelStream()
+//      .collect(Collectors.toList());
+//
+//    if (CollectionUtils.isEmpty(scriptList)) {
+//      log.info("invalid script");
+//      return 0;
+//    }
+//    scriptList.parallelStream().forEach(item -> {
+//      String scriptText = item.getScript();
+//      Integer strategyId = item.getStrategyId();
+//      groovyModuleRuleExecutor.praseAndCache("enginesScript_" + strategyId, scriptText);
+//    });
+//
+//    return scriptList.size();
+//  }
 
 }

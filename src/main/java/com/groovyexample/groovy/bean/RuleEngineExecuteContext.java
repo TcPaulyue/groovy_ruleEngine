@@ -3,13 +3,57 @@ package com.groovyexample.groovy.bean;
 import java.util.Map;
 import lombok.Data;
 
-@Data
 public class RuleEngineExecuteContext {
 
   /**
    * 业务元id,例如订单id,案件id等
    */
   private String bizId;
+
+  public String getBizId() {
+    return bizId;
+  }
+
+  public RuleEngineExecuteContext setBizId(String bizId) {
+    this.bizId = bizId;
+    return this;
+  }
+
+  public String getProId() {
+    return proId;
+  }
+
+  public RuleEngineExecuteContext setProId(String proId) {
+    this.proId = proId;
+    return this;
+  }
+
+  public Integer getGroupId() {
+    return groupId;
+  }
+
+  public RuleEngineExecuteContext setGroupId(Integer groupId) {
+    this.groupId = groupId;
+    return this;
+  }
+
+  public Map<String, Object> getData() {
+    return data;
+  }
+
+  public RuleEngineExecuteContext setData(Map<String, Object> data) {
+    this.data = data;
+    return this;
+  }
+
+  public boolean isInit() {
+    return init;
+  }
+
+  public RuleEngineExecuteContext setInit(boolean init) {
+    this.init = init;
+    return this;
+  }
 
   /**
    * 业务id,比如产品id或者产品组id
